@@ -12,13 +12,14 @@ playwright install chromium
 
 ## Run
 ```powershell
-pytest                          # all tests, headed (visible browser, 500 ms slow-motion)
+pytest                          # all tests, headless, full speed; report.html opens at the end
 pytest -m smoke                 # smoke only
-pytest --slowmo 0               # full speed
+pytest --headed --slowmo 500    # visible browser with 500 ms slow-motion
+pytest --no-open-report         # don't open the report (e.g. on CI)
 pytest --browser firefox --browser webkit
 pytest --base-url https://www.icscards.nl
 ```
-Every run writes an HTML report to `report.html` (open it in a browser).
+Every run writes an HTML report to `report.html` and opens it in your default browser.
 Failures keep a screenshot and trace in `test-results/` (`playwright show-trace <trace.zip>`).
 
 ## Layout
