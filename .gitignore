@@ -1,0 +1,4 @@
+.venv/
+test-results/
+report.html
+__pycache__/
