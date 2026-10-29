@@ -54,8 +54,18 @@ def pytest_runtest_makereport(item, call):
         )
 
 
+ENVIRONMENTS = {"qa": "https://www.qa.icscards.nl", "prod": "https://www.icscards.nl"}
+
+
 def pytest_addoption(parser):
+    parser.addoption("--env", choices=list(ENVIRONMENTS), default="qa", help="environment to test (default: qa)")
     parser.addoption("--no-open-report", action="store_true", help="do not open report.html when the run ends")
+
+
+def pytest_configure(config):
+    # An explicit --base-url wins over --env
+    if not config.getoption("base_url"):
+        config.option.base_url = ENVIRONMENTS[config.getoption("env")]
 
 
 def pytest_sessionfinish(session, exitstatus):

@@ -1,3 +1,5 @@
+import re
+
 from playwright.sync_api import Locator
 
 from pages.base_page import BasePage
@@ -20,7 +22,7 @@ class HomePage(BasePage):
 
     @property
     def open_menu_button(self) -> Locator:
-        return self.page.get_by_role("button", name="Open menudialoog").first
+        return self.page.get_by_role("button", name=re.compile(r"^Open menu ?dialo(g|oog)$")).first
 
     @property
     def main_heading(self) -> Locator:

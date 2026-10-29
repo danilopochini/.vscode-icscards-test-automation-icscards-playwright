@@ -1,6 +1,6 @@
 # ICS Cards Playwright tests
 
-Python + pytest + Playwright, using the Page Object pattern, against https://www.icscards.nl.
+Python + pytest + Playwright, using the Page Object pattern, against QA (https://www.qa.icscards.nl, default) or production (`--env prod`).
 
 ## Setup
 ```powershell
@@ -17,7 +17,8 @@ pytest -m smoke                 # smoke only
 pytest --headed --slowmo 500    # visible browser with 500 ms slow-motion
 pytest --no-open-report         # don't open the report (e.g. on CI)
 pytest --browser firefox --browser webkit
-pytest --base-url https://www.icscards.nl
+pytest --env prod               # test production (https://www.icscards.nl); default is qa
+pytest --base-url https://example.test   # any other URL (overrides --env)
 ```
 Every run writes an HTML report to `report.html` and opens it in your default browser.
 Failures keep a screenshot and trace in `test-results/` (`playwright show-trace <trace.zip>`).

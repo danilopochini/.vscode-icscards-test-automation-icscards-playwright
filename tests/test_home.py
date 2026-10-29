@@ -90,7 +90,8 @@ def test_no_broken_internal_links(home: HomePage, page: Page):
     assert hrefs, "expected internal links on the home page"
     failures = []
     for href in hrefs[:25]:
-        response = page.request.get(href.split("#")[0] or "/")
-        if response.status >= 400:
-            failures.append((href, response.status))
+        # fetch from within the page: the WAF blocks Playwright's separate request client
+        status = page.evaluate("url => fetch(url).then(r => r.status)", href.split("#")[0] or "/")
+        if status >= 400:
+            failures.append((href, status))
     assert not failures, f"Broken links: {failures}"
